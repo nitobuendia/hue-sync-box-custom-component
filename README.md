@@ -1,4 +1,5 @@
-# Philips Hue HDMI Sync Box - Custom Component for Home-Assistant
+# Philips Hue HDMI Play Sync Box
+# Custom Component for Home-Assistant
 This project is a `Philips Hue Play HDMI Sync Box` custom component for
 [Home-Assistant](https://home-assistant.io).
 
