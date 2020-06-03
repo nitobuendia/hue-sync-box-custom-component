@@ -196,6 +196,7 @@ The attributes will contain details about the sync box. In particular:
 
 ## References
 This component has been built using the following resources:
+1. [Home-Assistant Community post for this integration](https://community.home-assistant.io/t/custom-component-philips-hue-hdmi-play-sync-box/201622)
 1. [HDMI Sync Box API documentation](https://developers.meethue.com/develop/hue-entertainment/hue-hdmi-sync-box-api/)
 1. [Hue Sync Box support issue on ebaauw/homebridge-hue](https://github.com/ebaauw/homebridge-hue/issues/552#issuecomment-572256796)
 1. [Philips Hue Play HDMI sync post on the Home-Assistant community](https://community.home-assistant.io/t/philips-hue-play-hdmi-sync/137714)
