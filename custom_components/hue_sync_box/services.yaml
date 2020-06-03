@@ -1,0 +1,77 @@
+get_access_token:
+  description: Helper service to get Philips Hue Sync Box access token.
+  fields:
+    entity_id:
+      description: "Name(s) of the entities whose access token to get"
+      example: "remote.living_room_tv"
+
+set_brightness:
+  description: "Sets HDMI Sync Box to a certain brightness"
+  fields:
+    entity_id:
+      description: "Name(s) of the entities to set"
+      example: "remote.living_room_tv"
+    brightness:
+      description: "Brightness (0-200)"
+      example: "75"
+
+set_hdmi_input:
+  description: "Sets HDMI Sync box to a certain HDMI input"
+  fields:
+    entity_id:
+      description: "Name(s) of the entities to set"
+      example: "remote.living_room_tv"
+    hdmi_input:
+      description: HDMI input number (1-4)
+      example: "1"
+
+set_intensity:
+  description: "Sets HDMI Sync Box to a certain intensity"
+  fields:
+    entity_id:
+      description: "Name(s) of the entities to set"
+      example: "remote.living_room_tv"
+    intensity:
+      description: Intensity Level (Subtle, Moderate, High, Extreme)
+      example: "Extreme"
+    sync_mode:
+      description: "Name of the sync mode (Video, Music, Game)"
+      example: Game
+
+set_sync_mode:
+  description: "Sets HDMI Sync Box to a certain sync mode"
+  fields:
+    entity_id:
+      description: "Name(s) of the entities to set"
+      example: "remote.living_room_tv"
+    sync_mode:
+      description: Name of the sync mode (Passthrough, Powersave, Video, Music, Game)
+      example: "Video"
+
+toggle:
+  description: Toggles a device.
+  fields:
+    entity_id:
+      description: Name(s) of entities to toggle.
+      example: "remote.living_room_tv"
+
+turn_off:
+  description: "Sends the Power Off Command."
+  fields:
+    entity_id:
+      description: Name(s) of entities to turn off.
+      example: "remote.living_room_tv"
+
+turn_on:
+  description: "Sends the Power On Command."
+  fields:
+    entity_id:
+      description: Name(s) of entities to turn on.
+      example: "remote.living_room_tv"
+
+update:
+  description: "Updates device information."
+  fields:
+    entity_id:
+      description: "Name(s) of the entities to update"
+      example: "remote.living_room_tv"
