@@ -37,6 +37,7 @@ DEVICE_DEFAULT_NAME = 'Philips Hue Sync Box'
 # Accepted API values.
 INPUT_VALUES = ('1', '2', '3', '4')
 ACTIVE_SYNC_MODES = ('video', 'music', 'game')
+DEFAULT_SYNC_MODE = 'passthrough'
 SYNC_MODE_VALUES = ('passthrough', 'powersave') + ACTIVE_SYNC_MODES
 INTENSITY_VALUES = (
     'subtle', 'moderate', 'high', 'extreme', 'intense')  # Extreme = Intense.

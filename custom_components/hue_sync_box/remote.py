@@ -277,12 +277,14 @@ class HueSyncBoxRemote(remote.RemoteDevice):
     self.set_sync_mode('powersave')
     self.update()
 
-  def turn_on(self, activity='passthrough'):
+  def turn_on(self, activity=const.DEFAULT_SYNC_MODE):
     """Turns on.
 
     Args:
       activity: Sync mode to which to start.
     """
+    if not activity:
+      activity = const.DEFAULT_SYNC_MODE
     self.set_sync_mode(activity)
     self.update()
 
@@ -365,7 +367,7 @@ class HueSyncBoxRemote(remote.RemoteDevice):
     _LOGGER.debug(f'{self.entity_id}.async_set_hdmi_input called')
     await self._hass.async_add_job(self.set_hdmi_input, hdmi_input)
 
-  async def async_set_intensity(self, intensity, sync_mode):
+  async def async_set_intensity(self, intensity, sync_mode=None):
     _LOGGER.debug(f'{self.entity_id}.async_set_intensity called')
     await self._hass.async_add_job(
         self.set_intensity, intensity, sync_mode)
@@ -382,7 +384,7 @@ class HueSyncBoxRemote(remote.RemoteDevice):
     _LOGGER.debug(f'{self.entity_id}.async_turn_off called')
     await self._hass.async_add_job(self.turn_off)
 
-  async def async_turn_on(self, activity):
+  async def async_turn_on(self, activity=None):
     _LOGGER.debug(f'{self.entity_id}.async_turn_on called')
     await self._hass.async_add_job(self.turn_on, activity)
 
