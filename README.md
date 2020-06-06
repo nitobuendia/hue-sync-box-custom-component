@@ -53,16 +53,23 @@ remote:
 
 This component offers the following services:
 
+* `remote.learn_command`: Not supported.
+
+* `remote.send_command`: Not supported.
+
 * `remote.turn_on`: Turns on the Sync Box. Default sync mode is `passthrough`
   which means that it just allows the HDMI to work without syncing. This is
-  equivalent to changing sync mode to `passthrough`. To start syncing, you will
-  need to change the sync mode to `music`, `video` or `game`.
+  equivalent to changing sync mode to `passthrough`. However, since remote
+  supports `activity` field, you can use it to change the default `sync_mode`.
 
 ```yaml
   fields:
     entity_id:
       description: Name(s) of entities to turn on.
       example: "remote.living_room_tv"
+    activity:
+      description: Name of the sync mode (Passthrough, Powersave, Video, Music, Game)
+      example: Game
 ```
 
 * `remote.turn_off`: Turns off the Sync Box. This prevents HDMI from passing

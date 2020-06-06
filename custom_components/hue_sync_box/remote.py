@@ -210,6 +210,15 @@ class HueSyncBoxRemote(remote.RemoteDevice):
         notification_id=f'hue_sync_box_setup_{self._entity_id}')
     self._entity_onboarding = True
 
+  def learn_command(
+          self, device=None, command=None, alternative=None, timeout=None):
+    _LOGGER.info('Hue Sync Box remote does not support learn_command.')
+
+  def send_command(
+          self, device=None, command=None, num_repeats=None, delay_secs=None,
+          hold_secs=None):
+    _LOGGER.info('Hue Sync Box remote does not support send_command.')
+
   def set_brightness(self, brightness):
     """Sets HDMI Sync Box to a certain brightness.
 
@@ -268,9 +277,13 @@ class HueSyncBoxRemote(remote.RemoteDevice):
     self.set_sync_mode('powersave')
     self.update()
 
-  def turn_on(self):
-    """Turns on."""
-    self.set_sync_mode('passthrough')
+  def turn_on(self, activity='passthrough'):
+    """Turns on.
+
+    Args:
+      activity: Sync mode to which to start.
+    """
+    self.set_sync_mode(activity)
     self.update()
 
   def update(self):
@@ -331,6 +344,19 @@ class HueSyncBoxRemote(remote.RemoteDevice):
     _LOGGER.debug(f'{self.entity_id}.async_get_access_token called')
     await self._hass.async_add_job(self.get_access_token)
 
+  async def async_learn_command(
+          self, device=None, command=None, alternative=None, timeout=None):
+    _LOGGER.debug(f'{self.entity_id}.async_learn_command called')
+    await self._hass.async_add_job(
+        self.learn_command, device, command, alternative, timeout)
+
+  async def async_send_command(
+          self, device=None, command=None, num_repeats=None, delay_secs=None,
+          hold_secs=None):
+    _LOGGER.debug(f'{self.entity_id}.async_send_command called')
+    await self._hass.async_add_job(
+        self.send_command, device, command, num_repeats, delay_secs, hold_secs)
+
   async def async_set_brightness(self, brightness):
     _LOGGER.debug(f'{self.entity_id}.async_set_brightness called')
     await self._hass.async_add_job(self.set_brightness, brightness)
@@ -356,9 +382,9 @@ class HueSyncBoxRemote(remote.RemoteDevice):
     _LOGGER.debug(f'{self.entity_id}.async_turn_off called')
     await self._hass.async_add_job(self.turn_off)
 
-  async def async_turn_on(self):
+  async def async_turn_on(self, activity):
     _LOGGER.debug(f'{self.entity_id}.async_turn_on called')
-    await self._hass.async_add_job(self.turn_on)
+    await self._hass.async_add_job(self.turn_on, activity)
 
   async def async_update(self):
     _LOGGER.debug(f'{self.entity_id}.async_update called')
