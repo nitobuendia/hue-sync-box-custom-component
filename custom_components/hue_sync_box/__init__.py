@@ -1,12 +1,18 @@
 """Philips Hue Sync Box integration."""
 
 from homeassistant.helpers import config_validation
+import voluptuous
 
 from . import const
-from . import schemas
+from. import services
+
+
+PLATFORM_SCHEMA = config_validation.PLATFORM_SCHEMA.extend({
+    voluptuous.Required(const.CONF_IP_ADDRESS): config_validation.string,
+    voluptuous.Optional(const.CONF_NAME): config_validation.string,
+})
 
 
 async def async_setup(hass, config):
-  """Set up the Philips Hue Sync Box component."""
-  hass.data.setdefault(const.DOMAIN, schemas.REMOTE_SCHEMA)
+  hass.data[const.DOMAIN] = {}
   return True

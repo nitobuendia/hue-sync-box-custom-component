@@ -12,51 +12,19 @@ from homeassistant import util
 
 from . import api
 from . import const
-from . import schemas
+from . import services
 
 _LOGGER = logging.getLogger(__name__)
+
+_PLATFORM = 'remote'
 
 
 async def async_setup_platform(
         hass, config, async_add_entities, discovery_info=None):
   """Adds Philips Hue Sync Box to the list of remotes."""
-
   _LOGGER.info('Setting up remotes for Hue Sync Box.')
-
-  platform = entity_platform.current_platform.get()
-
-  platform.async_register_entity_service(
-      const.SERVICE_GET_ACCESS_TOKEN,
-      schemas.GET_ACCESS_TOKEN_SCHEMA,
-      const.SERVICE_GET_ACCESS_TOKEN,
-  )
-
-  platform.async_register_entity_service(
-      const.SERVICE_SET_BRIGHTNESS,
-      schemas.SET_BRIGHTNESS_SCHEMA,
-      const.SERVICE_SET_BRIGHTNESS,
-  )
-
-  platform.async_register_entity_service(
-      const.SERVICE_SET_HDMI_INPUT,
-      schemas.SET_HDMI_INPUT_SCHEMA,
-      const.SERVICE_SET_HDMI_INPUT,
-  )
-
-  platform.async_register_entity_service(
-      const.SERVICE_SET_INTENSITY,
-      schemas.SET_INTENSITY_SCHEMA,
-      const.SERVICE_SET_INTENSITY,
-  )
-
-  platform.async_register_entity_service(
-      const.SERVICE_SET_SYNC_MODE,
-      schemas.SET_SYNC_MODE_SCHEMA,
-      const.SERVICE_SET_SYNC_MODE,
-  )
-
+  services.register_services(hass)
   async_add_entities([HueSyncBoxRemote(config, hass)], True)
-
   return True
 
 
@@ -127,7 +95,8 @@ class HueSyncBoxRemote(remote.RemoteDevice):
     self._sync_active = None
     self._sync_mode = None
 
-    _LOGGER.debug(f'Set up for {self._entity_id} completed.')
+    hass.data[const.DOMAIN][self.entity_id] = self
+    _LOGGER.debug(f'Set up for {self.entity_id} completed.')
 
   # API token set up.
   def _get_access_token_data_from_file(self):
@@ -160,7 +129,7 @@ class HueSyncBoxRemote(remote.RemoteDevice):
   @property
   def entity_id(self):
     """Returns the entity ID for this remote."""
-    return f'remote.{self._entity_id}'
+    return f'{_PLATFORM}.{self._entity_id}'
 
   @property
   def is_on(self):
