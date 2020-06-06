@@ -28,7 +28,11 @@ async def async_setup_platform(
   return True
 
 
-class HueSyncBoxRemote(remote.RemoteDevice):
+if not hasattr(remote, 'RemoteEntity'):  # Legacy compatibility.
+  remote.RemoteEntity = remote.RemoteDevice
+
+
+class HueSyncBoxRemote(remote.RemoteEntity):
   """Representation of a Sync Box remote service.
 
   Properties:
