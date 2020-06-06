@@ -325,3 +325,41 @@ class HueSyncBoxRemote(remote.RemoteDevice):
     self._input3 = input3.get('name', 'HDMI 3')
     input4 = hdmi.get('input4', {})
     self._input4 = input4.get('name', 'HDMI 4')
+
+  # Async wrappers.
+  async def async_get_access_token(self):
+    _LOGGER.debug(f'{self.entity_id}.async_get_access_token called')
+    await self._hass.async_add_job(self.get_access_token)
+
+  async def async_set_brightness(self, brightness):
+    _LOGGER.debug(f'{self.entity_id}.async_set_brightness called')
+    await self._hass.async_add_job(self.set_brightness, brightness)
+
+  async def async_set_hdmi_input(self, hdmi_input):
+    _LOGGER.debug(f'{self.entity_id}.async_set_hdmi_input called')
+    await self._hass.async_add_job(self.set_hdmi_input, hdmi_input)
+
+  async def async_set_intensity(self, intensity, sync_mode):
+    _LOGGER.debug(f'{self.entity_id}.async_set_intensity called')
+    await self._hass.async_add_job(
+        self.set_intensity, intensity, sync_mode)
+
+  async def async_set_sync_mode(self, sync_mode):
+    _LOGGER.debug(f'{self.entity_id}.async_set_sync_mode called')
+    await self._hass.async_add_job(self.set_sync_mode, sync_mode)
+
+  async def async_toggle(self):
+    _LOGGER.debug(f'{self.entity_id}.async_toggle called')
+    await self._hass.async_add_job(self.toggle)
+
+  async def async_turn_off(self):
+    _LOGGER.debug(f'{self.entity_id}.async_turn_off called')
+    await self._hass.async_add_job(self.turn_off)
+
+  async def async_turn_on(self):
+    _LOGGER.debug(f'{self.entity_id}.async_turn_on called')
+    await self._hass.async_add_job(self.turn_on)
+
+  async def async_update(self):
+    _LOGGER.debug(f'{self.entity_id}.async_update called')
+    await self._hass.async_add_job(self.update)

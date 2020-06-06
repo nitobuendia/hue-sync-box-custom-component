@@ -87,12 +87,16 @@ def unregister_services(hass):
 def create_get_access_token_service(hass):
   """Returns service for get_access_token."""
   async def async_get_access_token(call):
+    _LOGGER.debug(
+        f'hue_syc_box async_get_access_token handler called '
+        f'with data: {call.data}.')
+
     entity_ids = call.data.get(const.ATTR_ENTITY_ID)
 
     for entity_id in entity_ids:
       entity = hass.data[const.DOMAIN].get(entity_id)
       if entity_id:
-        entity.get_access_token()
+        await entity.async_get_access_token()
 
   return async_get_access_token
 
@@ -100,13 +104,17 @@ def create_get_access_token_service(hass):
 def create_set_brightness(hass):
   """Returns service for set_brightness."""
   async def async_set_brightness(call):
+    _LOGGER.debug(
+        f'hue_syc_box async_set_brightness handler called '
+        f'with data: {call.data}.')
+
     entity_ids = call.data.get(const.ATTR_ENTITY_ID)
     brightness = call.data.get(const.ATTR_BRIGHTNESS)
 
     for entity_id in entity_ids:
       entity = hass.data[const.DOMAIN].get(entity_id)
       if entity_id:
-        entity.set_brightness(brightness)
+        await entity.async_set_brightness(brightness)
 
   return async_set_brightness
 
@@ -114,13 +122,17 @@ def create_set_brightness(hass):
 def create_set_hdmi_input_service(hass):
   """Returns service for set_hdmi_input."""
   async def async_set_hdmi_input(call):
+    _LOGGER.debug(
+        f'hue_syc_box create_set_hdmi_input_service handler called '
+        f'with data: {call.data}.')
+
     entity_ids = call.data.get(const.ATTR_ENTITY_ID)
     hdmi_input = call.data.get(const.ATTR_HDMI_INPUT)
 
     for entity_id in entity_ids:
       entity = hass.data[const.DOMAIN].get(entity_id)
       if entity_id:
-        entity.set_hdmi_input(hdmi_input)
+        await entity.async_set_hdmi_input(hdmi_input)
 
   return async_set_hdmi_input
 
@@ -128,6 +140,10 @@ def create_set_hdmi_input_service(hass):
 def create_set_intensity_service(hass):
   """Returns service for set_intensity."""
   async def async_set_intensity(call):
+    _LOGGER.debug(
+        f'hue_syc_box async_set_intensity handler called '
+        f'with data: {call.data}.')
+
     entity_ids = call.data.get(const.ATTR_ENTITY_ID)
     intensity = call.data.get(const.ATTR_INTENSITY)
     sync_mode = call.data.get(const.ATTR_SYNC_MODE)
@@ -135,7 +151,7 @@ def create_set_intensity_service(hass):
     for entity_id in entity_ids:
       entity = hass.data[const.DOMAIN].get(entity_id)
       if entity_id:
-        entity.set_intensity(intensity, sync_mode)
+        await entity.async_set_intensity(intensity, sync_mode)
 
   return async_set_intensity
 
@@ -143,12 +159,16 @@ def create_set_intensity_service(hass):
 def create_set_sync_mode_service(hass):
   """Returns service for set_sync_mode."""
   async def async_set_sync_mode(call):
+    _LOGGER.debug(
+        f'hue_syc_box async_set_sync_mode handler called '
+        f'with data: {call.data}.')
+
     entity_ids = call.data.get(const.ATTR_ENTITY_ID)
     sync_mode = call.data.get(const.ATTR_SYNC_MODE)
 
     for entity_id in entity_ids:
       entity = hass.data[const.DOMAIN].get(entity_id)
       if entity_id:
-        entity.set_sync_mode(sync_mode)
+        await entity.async_set_sync_mode(sync_mode)
 
   return async_set_sync_mode
