@@ -6,8 +6,8 @@ This project is a `Philips Hue Play HDMI Sync Box` custom component for
 
 ## Installation
 
-1. Copy the files from the `custom_component/hue_sync_box/` folder into the
-`custom_component/hue_sync_box/` of your Home-Assistant installation.
+1. Copy the files from the `custom_components/hue_sync_box/` folder into the
+`custom_components/hue_sync_box/` of your Home-Assistant installation.
 
 1. Configure the remote following the instructions in `Configuration`.
 1. Restart the Home-Assistant instance.
