@@ -14,6 +14,7 @@ CONF_NAME = const.CONF_NAME
 
 # Services.
 SERVICE_GET_ACCESS_TOKEN = 'get_access_token'
+SERVICE_SET_AREA = 'set_area'
 SERVICE_SET_BRIGHTNESS = 'set_brightness'
 SERVICE_SET_HDMI_INPUT = 'set_hdmi_input'
 SERVICE_SET_INTENSITY = 'set_intensity'
@@ -24,6 +25,7 @@ SERVICE_TURN_ON = const.SERVICE_TURN_ON
 SERVICE_UPDATE = 'update'
 
 # Service attributes.
+ATTR_AREA_NAME = 'area_name'
 ATTR_BRIGHTNESS = const.CONF_BRIGHTNESS
 ATTR_ENTITY_ID = const.ATTR_ENTITY_ID
 ATTR_HDMI_INPUT = 'hdmi_input'

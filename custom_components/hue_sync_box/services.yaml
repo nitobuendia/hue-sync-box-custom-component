@@ -5,6 +5,16 @@ get_access_token:
       description: "Name(s) of the entities whose access token to get"
       example: "remote.living_room_tv"
 
+set_area:
+  description: "Sets HDMI Sync Box to a certain Hue entertainment area"
+  fields:
+    entity_id:
+      description: "Name(s) of the entities to set"
+      example: "remote.living_room_tv"
+    area_name:
+      description: "Hue Entertainment area name"
+      example: "Living Room Lights"
+
 set_brightness:
   description: "Sets HDMI Sync Box to a certain brightness"
   fields:

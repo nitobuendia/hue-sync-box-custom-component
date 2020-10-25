@@ -88,6 +88,8 @@ class HueSyncBoxRemote(remote.RemoteEntity):
     # Internal attributes.
     self._brightness = None
     self._device_name = const.DEVICE_DEFAULT_NAME
+    self._group_active = None
+    self._groups = None
     self._hdmi_active = None
     self._hdmi_source = None
     self._input1 = None
@@ -157,6 +159,8 @@ class HueSyncBoxRemote(remote.RemoteEntity):
     return {
         'brightness': self._brightness,
         'device_name': self._device_name,
+        'group_active': self._group_active,
+        'groups': self._groups,
         'hdmi_active': self._hdmi_active,
         'hdmi_source': self._hdmi_source,
         'inputs': {
@@ -222,6 +226,23 @@ class HueSyncBoxRemote(remote.RemoteEntity):
           self, device=None, command=None, num_repeats=None, delay_secs=None,
           hold_secs=None):
     _LOGGER.info('Hue Sync Box remote does not support send_command.')
+
+  def set_area(self, area_name):
+    """Sets HDMI Sync Box to a sync to a certain entertainment area name.
+
+    Args:
+      area_name: Name of the entertainment area to which to sync lights.
+    """
+    if not self._groups:
+      self.update()
+
+    area_group = self._groups.get(area_name)
+    if not area_group:
+      raise ValueError(f'Hue entertainment area {area_name} does not exist.')
+
+    area_id = area_group['id']
+    self._api.set_target_area_group(area_id)
+    self.update()
 
   def set_brightness(self, brightness):
     """Sets HDMI Sync Box to a certain brightness.
@@ -345,6 +366,20 @@ class HueSyncBoxRemote(remote.RemoteEntity):
     input4 = hdmi.get('input4', {})
     self._input4 = input4.get('name', 'HDMI 4')
 
+    hue = info.get('hue', {})
+    hue_groups = hue.get('groups', {})
+    groups = {}
+    for group_id, group_data in hue_groups.items():
+      new_group_data = group_data.copy()
+      new_group_data['id'] = group_id
+      group_name = new_group_data['name']
+      groups[group_name] = new_group_data
+    self._groups = groups
+
+    active_group_id = hue.get('groupId')
+    active_group = hue_groups.get(active_group_id, {})
+    self._group_active = active_group.get('name', const.DEFAULT_STR_VALUE)
+
   # Async wrappers.
   async def async_get_access_token(self):
     _LOGGER.debug(f'{self.entity_id}.async_get_access_token called')
@@ -362,6 +397,10 @@ class HueSyncBoxRemote(remote.RemoteEntity):
     _LOGGER.debug(f'{self.entity_id}.async_send_command called')
     await self._hass.async_add_job(
         self.send_command, device, command, num_repeats, delay_secs, hold_secs)
+
+  async def async_set_area(self, area_name):
+    _LOGGER.debug(f'{self.entity_id}.async_set_area called')
+    await self._hass.async_add_job(self.set_area, area_name)
 
   async def async_set_brightness(self, brightness):
     _LOGGER.debug(f'{self.entity_id}.async_set_brightness called')

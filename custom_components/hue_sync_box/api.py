@@ -128,6 +128,16 @@ class HueSyncBoxApi(object):
     response = self._call_api_endpoint(SyncBoxEndpoints.EXECUTION, payload)
     _LOGGER.debug(f'Response {response.status_code}: {response.text}')
 
+  def set_target_area_group(self, group_id):
+    """Sets the entertainment group area target.
+
+    Args:
+      group_id: Entertainment group id.
+    """
+    payload = {'hueTarget': f'groups/{group_id}'}
+    response = self._call_api_endpoint(SyncBoxEndpoints.EXECUTION, payload)
+    _LOGGER.debug(f'Response {response.status_code}: {response.text}')
+
   def set_intensity(self, intensity, sync_mode):
     """Sets HDMI Sync Box to a certain intensity mode
 

@@ -12,6 +12,10 @@ _LOGGER = logging.getLogger(__name__)
 
 GET_ACCESS_TOKEN_SCHEMA = config_validation.make_entity_service_schema({})
 
+SET_AREA_SCHEMA = config_validation.make_entity_service_schema({
+    voluptuous.Required(const.ATTR_AREA_NAME): config_validation.string,
+})
+
 SET_BRIGHTNESS_SCHEMA = config_validation.make_entity_service_schema({
     voluptuous.Required(const.ATTR_BRIGHTNESS): config_validation.positive_int,
 })
@@ -40,6 +44,14 @@ def register_services(hass):
       const.SERVICE_GET_ACCESS_TOKEN,
       get_access_token_service,
       schema=GET_ACCESS_TOKEN_SCHEMA,
+  )
+
+  set_area_service = create_set_area(hass)
+  hass.services.async_register(
+      const.DOMAIN,
+      const.SERVICE_SET_AREA,
+      set_area_service,
+      schema=SET_AREA_SCHEMA,
   )
 
   set_brightness_service = create_get_access_token_service(hass)
@@ -78,6 +90,7 @@ def register_services(hass):
 def unregister_services(hass):
   """Unregisters custom services from hue_sync_box."""
   hass.services.async_remove(const.DOMAIN, const.SERVICE_GET_ACCESS_TOKEN)
+  hass.services.async_remove(const.DOMAIN, const.SERVICE_SET_AREA)
   hass.services.async_remove(const.DOMAIN, const.SERVICE_SET_BRIGHTNESS)
   hass.services.async_remove(const.DOMAIN, const.SERVICE_SET_HDMI_INPUT)
   hass.services.async_remove(const.DOMAIN, const.SERVICE_SET_INTENSITY)
@@ -99,6 +112,24 @@ def create_get_access_token_service(hass):
         await entity.async_get_access_token()
 
   return async_get_access_token
+
+
+def create_set_area(hass):
+  """Returns service for set_area."""
+  async def async_set_area(call):
+    _LOGGER.debug(
+        f'hue_syc_box async_set_area handler called '
+        f'with data: {call.data}.')
+
+    entity_ids = call.data.get(const.ATTR_ENTITY_ID)
+    area_name = call.data.get(const.ATTR_AREA_NAME)
+
+    for entity_id in entity_ids:
+      entity = hass.data[const.DOMAIN].get(entity_id)
+      if entity_id:
+        await entity.async_set_area(area_name)
+
+  return async_set_area
 
 
 def create_set_brightness(hass):
