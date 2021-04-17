@@ -1,6 +1,7 @@
 {
   "domain": "hue_sync_box",
   "name": "Hue Sync Box",
+  "version": "1.0",
   "documentation": "https://github.com/nitobuendia/hue-sync-box-custom-component",
   "dependencies": [],
   "codeowners": ["@nitobuendia"],
