@@ -154,7 +154,7 @@ class HueSyncBoxRemote(remote.RemoteEntity):
 
   # Attributes.
   @property
-  def device_state_attributes(self):
+  def extra_state_attributes(self):
     """Return the state attributes."""
     return {
         'brightness': self._brightness,
