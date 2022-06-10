@@ -134,7 +134,7 @@ class HueSyncBoxApi(object):
     Args:
       group_id: Entertainment group id.
     """
-    payload = {'hueTarget': f'/groups/{group_id}'}
+    payload = {'hueTarget': f'{group_id}'}
     response = self._call_api_endpoint(SyncBoxEndpoints.EXECUTION, payload)
     _LOGGER.debug(f'Response {response.status_code}: {response.text}')
 
