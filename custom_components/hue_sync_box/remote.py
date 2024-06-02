@@ -383,54 +383,54 @@ class HueSyncBoxRemote(remote.RemoteEntity):
   # Async wrappers.
   async def async_get_access_token(self):
     _LOGGER.debug(f'{self.entity_id}.async_get_access_token called')
-    await self._hass.async_add_job(self.get_access_token)
+    await self._hass.async_add_executor_job(self.get_access_token)
 
   async def async_learn_command(
           self, device=None, command=None, alternative=None, timeout=None):
     _LOGGER.debug(f'{self.entity_id}.async_learn_command called')
-    await self._hass.async_add_job(
+    await self._hass.async_add_executor_job(
         self.learn_command, device, command, alternative, timeout)
 
   async def async_send_command(
           self, device=None, command=None, num_repeats=None, delay_secs=None,
           hold_secs=None):
     _LOGGER.debug(f'{self.entity_id}.async_send_command called')
-    await self._hass.async_add_job(
+    await self._hass.async_add_executor_job(
         self.send_command, device, command, num_repeats, delay_secs, hold_secs)
 
   async def async_set_area(self, area_name):
     _LOGGER.debug(f'{self.entity_id}.async_set_area called')
-    await self._hass.async_add_job(self.set_area, area_name)
+    await self._hass.async_add_executor_job(self.set_area, area_name)
 
   async def async_set_brightness(self, brightness):
     _LOGGER.debug(f'{self.entity_id}.async_set_brightness called')
-    await self._hass.async_add_job(self.set_brightness, brightness)
+    await self._hass.async_add_executor_job(self.set_brightness, brightness)
 
   async def async_set_hdmi_input(self, hdmi_input):
     _LOGGER.debug(f'{self.entity_id}.async_set_hdmi_input called')
-    await self._hass.async_add_job(self.set_hdmi_input, hdmi_input)
+    await self._hass.async_add_executor_job(self.set_hdmi_input, hdmi_input)
 
   async def async_set_intensity(self, intensity, sync_mode=None):
     _LOGGER.debug(f'{self.entity_id}.async_set_intensity called')
-    await self._hass.async_add_job(
+    await self._hass.async_add_executor_job(
         self.set_intensity, intensity, sync_mode)
 
   async def async_set_sync_mode(self, sync_mode):
     _LOGGER.debug(f'{self.entity_id}.async_set_sync_mode called')
-    await self._hass.async_add_job(self.set_sync_mode, sync_mode)
+    await self._hass.async_add_executor_job(self.set_sync_mode, sync_mode)
 
   async def async_toggle(self):
     _LOGGER.debug(f'{self.entity_id}.async_toggle called')
-    await self._hass.async_add_job(self.toggle)
+    await self._hass.async_add_executor_job(self.toggle)
 
   async def async_turn_off(self):
     _LOGGER.debug(f'{self.entity_id}.async_turn_off called')
-    await self._hass.async_add_job(self.turn_off)
+    await self._hass.async_add_executor_job(self.turn_off)
 
   async def async_turn_on(self, activity=None):
     _LOGGER.debug(f'{self.entity_id}.async_turn_on called')
-    await self._hass.async_add_job(self.turn_on, activity)
+    await self._hass.async_add_executor_job(self.turn_on, activity)
 
   async def async_update(self):
     _LOGGER.debug(f'{self.entity_id}.async_update called')
-    await self._hass.async_add_job(self.update)
+    await self._hass.async_add_executor_job(self.update)
