@@ -8,10 +8,12 @@ import json
 import logging
 import requests
 
+from requests.packages.urllib3.exceptions import InsecureRequestWarning
 from . import const
 
 
 _LOGGER = logging.getLogger(__name__)
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 
 
 class SyncBoxEndpoints(enum.Enum):
